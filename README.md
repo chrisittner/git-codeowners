@@ -1,20 +1,40 @@
 # git-codeowners
 
-**A git subcommand to validate and query CODEOWNERS.**
+**A git subcommand to query and validate CODEOWNERS.**
 
-git-codeowners - List code ownership of files based on the [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) of the current repository.
-
-## Basic Example
+List owners of files based on the [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) of the current repository.
 
 ```
-> git ls-files | git codeowners
-.gitignore                     unowned
+> git codeowners src/main.rs
+src/main.rs                    @weyland
+```
+
+```
+> git codeowners `git ls-files`
+.gitignore                     (unowned)
 Cargo.lock                     @weyland
 Cargo.toml                     @weyland
-LICENSE                        unowned
+LICENSE                        (unowned)
 README.md                      @weyland
 src/main.rs                    @weyland
 ```
+
+```
+# oops, did the last commit add some unowned files?
+> git diff --name-only --diff-filter=A | git codeowners
+.gitignore                     (unowned)
+LICENSE                        (unowned)
+```
+
+```
+# I need some stats about my big monorepo
+> echo `git ls-files | git codeowners | grep "(unowned)"| wc -l` out of `git ls-files | git codeowners | wc -l` files in this repository do not have a corresponding CODEOWNERS entry
+2 out of 6 files in this repository do not have a corresponding CODEOWNERS entry
+```
+
+## Installation
+
+- Via Cargo: `cargo install git-codeowners`
 
 ## Usage
 
@@ -24,19 +44,19 @@ src/main.rs                    @weyland
   git codeowners some/file
   ```
 
-- Get owners of a list of files
+- Get owners for a list of files
 
   ```
   git codeowners some/file some/other/file
   ```
 
-- Get owners of every tracked file
+- Get owners for every tracked file
 
   ```
   git ls-files | git codeowners
   ```
 
-- Get owners of files modified in last five commits
+- Get owners for files modified in last five commits
 
   ```
   git diff --name-only HEAD~5 HEAD | git codeowners
@@ -48,9 +68,10 @@ src/main.rs                    @weyland
   git diff --diff-filter=ACR --name-only | git codeowners && echo "Great job! No unowned files added!"
   ```
 
-## Installation
-
-- Via Cargo: `cargo install git-codeowners`
+- Get an overview of your CODEOWNERS coverage
+  ```
+  echo `git ls-files | git codeowners | grep "(unowned)"| wc -l` out of `git ls-files | git codeowners | wc -l` files in this repository do not have a corresponding CODEOWNERS entry
+  ```
 
 ## Features
 

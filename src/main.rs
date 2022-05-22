@@ -1,3 +1,6 @@
+//! A git subcommand to query and validate CODEOWNERS.
+//! See [https://github.com/chrisittner/git-codeowners](https://github.com/chrisittner/git-codeowners)
+
 extern crate codeowners;
 use atty::Stream;
 use clap::Parser;
@@ -5,7 +8,7 @@ use std::io::{self, BufRead};
 use std::path;
 use std::process;
 
-/// git-codeowners - Check code ownership of files
+/// git-codeowners - List owners of files
 /// based on the CODEOWNERS file of the current repository
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
@@ -61,7 +64,7 @@ fn check_ownership_and_exit(paths: &Vec<String>) {
 fn check_and_print_owners(owners: &codeowners::Owners, path: &String) -> bool {
     match owners.of(&path) {
         None => {
-            println!("{: <30} unowned", path);
+            println!("{: <30} (unowned)", path);
             false
         }
         Some(owners) => {
@@ -79,16 +82,16 @@ fn check_and_print_owners(owners: &codeowners::Owners, path: &String) -> bool {
 fn get_codeowners_path() -> io::Result<path::PathBuf> {
     let repo_root = get_current_repo_root()?;
 
-    let co_dotgithub = repo_root.join(".github").join("CODEOWNERS");
-    let co_docs = repo_root.join("docs").join("CODEOWNERS");
     let co_repo_root = repo_root.join("CODEOWNERS");
+    let co_docs = repo_root.join("docs").join("CODEOWNERS");
+    let co_dotgithub = repo_root.join(".github").join("CODEOWNERS");
 
-    if co_dotgithub.exists() {
-        Ok(co_dotgithub)
+    if co_repo_root.exists() {
+        Ok(co_repo_root)
     } else if co_docs.exists() {
         Ok(co_docs)
-    } else if co_repo_root.exists() {
-        Ok(co_repo_root)
+    } else if co_dotgithub.exists() {
+        Ok(co_dotgithub)
     } else {
         Err(io::Error::new(
             io::ErrorKind::InvalidInput,
