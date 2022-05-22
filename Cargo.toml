@@ -1,0 +1,9 @@
+[package]
+name = "git-codeowners"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+codeowners = "0.1.3"
+atty = "0.2.14"
+clap = { version = "3.1.18", features = ["derive"] }
