@@ -5,39 +5,40 @@ use std::io::{self, BufRead};
 use std::path;
 use std::process;
 
-/// git-codeowners - Check code ownership of files based on the CODEOWNERS file of the current repository
+/// git-codeowners - Check code ownership of files
+/// based on the CODEOWNERS file of the current repository
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
-
-
-    /// One or more file paths for which to check ownership. Can also be provided via pipe/stdin.
-    /// (Note: Each path should be relative to the git repository root -- this makes it easy to do e.g. `git ls-files | git codeowners`)
-    // #[clap(parse())]
+    /// One or more file paths for which to check ownership.
+    /// Can also be provided via pipe/stdin.
+    /// (Note: Each path should be relative to the git repository root
+    /// -- this makes it easy to do e.g. `git ls-files | git codeowners`)
     #[clap(required(true))]
     paths: Vec<String>,
 }
 
 fn main() {
+    let args = Args::parse();
+
     let codeowners_path = get_codeowners_path().expect("Error locating CODEOWNERS");
     let codeowners = codeowners::from_path(codeowners_path);
 
-    if was_data_piped_in() {
+    if data_was_piped_in() {
         let stdin = io::stdin();
         let lines_from_stdin = stdin.lock().lines();
-        let paths_from_stdin: Vec<String> = lines_from_stdin
+
+        let paths: Vec<String> = lines_from_stdin
             .map(|l| l.unwrap().trim().to_string())
             .collect::<Vec<_>>();
 
-        process_paths_and_exit(&codeowners, &paths_from_stdin);
+        process_paths_and_exit(&codeowners, &paths);
     } else {
-        let args = Args::parse();
-
         process_paths_and_exit(&codeowners, &args.paths);
     }
 }
 
-fn was_data_piped_in() -> bool {
+fn data_was_piped_in() -> bool {
     !atty::is(Stream::Stdin)
 }
 
