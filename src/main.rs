@@ -19,11 +19,6 @@ struct Args {
 }
 
 fn main() {
-    let args = Args::parse();
-
-    let codeowners_path = get_codeowners_path().expect("Error locating CODEOWNERS");
-    let codeowners = codeowners::from_path(codeowners_path);
-
     if data_was_piped_in() {
         let stdin = io::stdin();
         let lines_from_stdin = stdin.lock().lines();
@@ -32,9 +27,11 @@ fn main() {
             .map(|l| l.unwrap().trim().to_string())
             .collect::<Vec<_>>();
 
-        process_paths_and_exit(&codeowners, &paths);
+        check_ownership_and_exit(&paths);
     } else {
-        process_paths_and_exit(&codeowners, &args.paths);
+        let args = Args::parse();
+
+        check_ownership_and_exit(&args.paths);
     }
 }
 
@@ -42,11 +39,14 @@ fn data_was_piped_in() -> bool {
     !atty::is(Stream::Stdin)
 }
 
-fn process_paths_and_exit(codeowners: &codeowners::Owners, paths: &Vec<String>) {
+fn check_ownership_and_exit(paths: &Vec<String>) {
+    let codeowners_path = get_codeowners_path().expect("Error locating CODEOWNERS");
+    let codeowners = codeowners::from_path(codeowners_path);
+
     let mut unowned_files_found = false;
 
     for path in paths {
-        if !check_and_print_owners(codeowners, &path) {
+        if !check_and_print_owners(&codeowners, &path) {
             unowned_files_found = true
         }
     }
@@ -61,7 +61,7 @@ fn process_paths_and_exit(codeowners: &codeowners::Owners, paths: &Vec<String>) 
 fn check_and_print_owners(owners: &codeowners::Owners, path: &String) -> bool {
     match owners.of(&path) {
         None => {
-            println!("{}\t unowned", path);
+            println!("{: <30} unowned", path);
             false
         }
         Some(owners) => {
@@ -70,7 +70,7 @@ fn check_and_print_owners(owners: &codeowners::Owners, path: &String) -> bool {
                 .map(|owner| owner.to_string())
                 .collect::<Vec<String>>()
                 .join(", ");
-            println!("{}\t{}", path, owner_str);
+            println!("{: <30} {}", path, owner_str);
             true
         }
     }

@@ -4,7 +4,19 @@
 
 git-codeowners - List code ownership of files based on the [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) of the current repository.
 
-## Examples
+## Basic Example
+
+```
+> git ls-files | git codeowners
+.gitignore                     unowned
+Cargo.lock                     @weyland
+Cargo.toml                     @weyland
+LICENSE                        unowned
+README.md                      @weyland
+src/main.rs                    @weyland
+```
+
+## Usage
 
 - Get owners of a file
 
@@ -49,4 +61,4 @@ git-codeowners - List code ownership of files based on the [CODEOWNERS](https://
 
 ## Issues & Contributing
 
-If you have any questions or problems, feel free to communicate using Github Issues. PRs welcome.
+If you have any questions or problems, feel free to communicate using Github Issues.
