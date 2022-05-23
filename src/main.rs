@@ -1,5 +1,5 @@
 //! A git subcommand to query and validate CODEOWNERS.
-//! See [https://github.com/chrisittner/git-codeowners](https://github.com/chrisittner/git-codeowners)
+//! See [https://github.com/chrisittner/git-owners](https://github.com/chrisittner/git-owners)
 
 extern crate codeowners;
 use atty::Stream;
@@ -8,7 +8,7 @@ use std::io::{self, BufRead};
 use std::path;
 use std::process;
 
-/// git-codeowners - List owners of files
+/// git-owners - List owners of files
 /// based on the CODEOWNERS file of the current repository
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
@@ -16,7 +16,7 @@ struct Args {
     /// One or more file paths for which to check ownership.
     /// Can also be provided via pipe/stdin.
     /// (Note: Each path should be relative to the git repository root
-    /// -- this makes it easy to do e.g. `git ls-files | git codeowners`)
+    /// -- this makes it easy to do e.g. `git ls-files | git owners`)
     #[clap(required(true))]
     paths: Vec<String>,
 }
