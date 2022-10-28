@@ -4,6 +4,7 @@ license = "MIT"
 description = "A git subcommand to query and validate CODEOWNERS"
 version = "1.0.0"
 edition = "2021"
+repository = "https://github.com/chrisittner/git-owners"
 
 [dependencies]
 codeowners = "0.1.3"
