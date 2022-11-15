@@ -1,0 +1,24 @@
+[project]
+name = "git-codeowners"
+requires-python = ">=3.8"
+keywords = ["CODEOWNERS", "git", "owners"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Rust",
+    "Operating System :: POSIX",
+    "Operating System :: MacOS :: MacOS X",
+    "Topic :: Software Development :: Quality Assurance",
+
+]
+
+[project.urls]
+homepage = "https://github.com/chrisittner/git-owners"
+documentation = "https://github.com/chrisittner/git-owners"
+repository = "https://github.com/chrisittner/git-owners"
+
+[build-system]
+requires = ["maturin>=0.13,<0.14"]
+build-backend = "maturin"
