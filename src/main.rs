@@ -43,7 +43,13 @@ fn data_was_piped_in() -> bool {
 }
 
 fn check_ownership_and_exit(paths: &Vec<String>) {
-    let codeowners_path = get_codeowners_path().expect("Error locating CODEOWNERS");
+    let codeowners_path = match get_codeowners_path() {
+        Ok(path) => path,
+        Err(e) => {
+            eprintln!("{}", e);
+            process::exit(1);
+        }
+    };
     let codeowners = codeowners::from_path(codeowners_path);
 
     let mut unowned_files_found = false;
@@ -96,7 +102,7 @@ fn get_codeowners_path() -> io::Result<path::PathBuf> {
         Err(io::Error::new(
             io::ErrorKind::InvalidInput,
             format!(
-                "No CODEOWNERS file found. Checked {},{},{}",
+                "fatal: no CODEOWNERS file found. checked {}, {}, {}",
                 co_dotgithub.display(),
                 co_docs.display(),
                 co_repo_root.display()
@@ -118,7 +124,7 @@ fn get_current_repo_root() -> io::Result<path::PathBuf> {
     } else {
         Err(io::Error::new(
             io::ErrorKind::InvalidInput,
-            String::from_utf8(res.stdout).unwrap(),
+            String::from_utf8(res.stderr).unwrap(),
         ))
     }
 }
