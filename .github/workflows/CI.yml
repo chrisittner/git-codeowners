@@ -6,13 +6,9 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-      - master
-    tags:
-      - '*'
-  pull_request:
+  release:
+    types:
+      - released
   workflow_dispatch:
 
 permissions:
