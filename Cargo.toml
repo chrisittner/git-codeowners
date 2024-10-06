@@ -2,14 +2,22 @@
 name = "git-owners"
 license = "MIT"
 description = "A git subcommand to query and validate CODEOWNERS"
-version = "1.0.2"
+version = "1.1.0"
 edition = "2021"
 repository = "https://github.com/chrisittner/git-owners"
 
 [dependencies]
 codeowners = "0.1.3"
 atty = "0.2.14"
-clap = { version = "3.1.18", features = ["derive"] }
+clap = { version = "4.4.19", features = ["derive"] }
+
+[[bin]]
+name = "git-codeowners"
+path = "src/main.rs"
+
+[[bin]]
+name = "git-owners"
+path = "src/main.rs"
 
 [dependencies.pyo3]
 version = "0.17.3"

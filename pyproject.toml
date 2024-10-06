@@ -15,10 +15,13 @@ classifiers = [
 ]
 
 [project.urls]
-homepage = "https://github.com/chrisittner/git-owners"
-documentation = "https://github.com/chrisittner/git-owners"
-repository = "https://github.com/chrisittner/git-owners"
+homepage = "https://github.com/chrisittner/git-codeowners"
+documentation = "https://github.com/chrisittner/git-codeowners"
+repository = "https://github.com/chrisittner/git-codeowners"
 
 [build-system]
 requires = ["maturin>=1.0,<2.0"]
 build-backend = "maturin"
+
+[tool.maturin]
+exclude = ["git-owners"]
