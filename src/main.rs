@@ -15,8 +15,8 @@ use std::process;
 struct Args {
     /// One or more file paths for which to check ownership.
     /// Can also be provided via pipe/stdin.
-    /// (Note: Each path should be relative to the git repository root
-    /// -- this makes it easy to do e.g. `git ls-files | git owners`)
+    /// Each path should be relative to the git repository root
+    /// -- this makes it easy to do e.g. `git ls-files | git owners`
     #[clap(required(true))]
     paths: Vec<String>,
 }

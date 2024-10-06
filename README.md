@@ -37,8 +37,7 @@ LICENSE                                  (unowned)
 - via [pip](https://pypi.org/project/git-codeowners/): `pip install git-codeowners`
 - via [Cargo](https://crates.io/crates/git-owners): `cargo install git-owners`
 
-  > [!NOTE]
-  > The Cargo crate installs an equivalent `git-owners` command in addition to `git-codeowners`.
+  Note: The Cargo crate installs an equivalent `git-owners` command in addition to `git-codeowners`, for backwards compatibility.
 
 
 ## Usage
@@ -54,6 +53,9 @@ LICENSE                                  (unowned)
   ```
   git codeowners some/file some/other/file
   ```
+
+> [!NOTE]
+> Each path should be relative to the git repository root -- this makes it easy to combine with other git commands.
 
 - Show owners for every tracked file in the repository
 
