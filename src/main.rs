@@ -70,7 +70,7 @@ fn check_ownership_and_exit(paths: &Vec<String>) {
 fn check_and_print_owners(owners: &codeowners::Owners, path: &String) -> bool {
     match owners.of(&path) {
         None => {
-            println!("{: <30} (unowned)", path);
+            println!("{: <40} (unowned)", path);
             false
         }
         Some(owners) => {
@@ -79,7 +79,7 @@ fn check_and_print_owners(owners: &codeowners::Owners, path: &String) -> bool {
                 .map(|owner| owner.to_string())
                 .collect::<Vec<String>>()
                 .join(", ");
-            println!("{: <30} {}", path, owner_str);
+            println!("{: <40} {}", path, owner_str);
             true
         }
     }

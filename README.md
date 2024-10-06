@@ -34,8 +34,9 @@ LICENSE                                  (unowned)
 
 ## Installation
 
-- via pip: `pip install git-codeowners`
-- via Cargo: `cargo install git-owners`
+- via [pip](https://pypi.org/project/git-codeowners/): `pip install git-codeowners`
+- via [Cargo](https://crates.io/crates/git-owners): `cargo install git-owners`
+
   > [!NOTE]
   > The Cargo crate installs an equivalent `git-owners` command in addition to `git-codeowners`.
 
