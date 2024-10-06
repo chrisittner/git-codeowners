@@ -2,7 +2,7 @@
 name = "git-owners"
 license = "MIT"
 description = "A git subcommand to query and validate CODEOWNERS"
-version = "1.1.1"
+version = "1.1.2"
 edition = "2021"
 repository = "https://github.com/chrisittner/git-codeowners"
 

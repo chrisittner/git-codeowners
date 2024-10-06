@@ -16,8 +16,7 @@ use std::process;
 struct Args {
     /// One or more file paths for which to check ownership.
     /// Can also be provided via pipe/stdin.
-    /// Each path should be relative to the git repository root
-    /// -- this makes it easy to do e.g. `git ls-files | git codeowners`
+    /// Each path should be relative to the git repository root.
     #[clap()]
     paths: Vec<String>,
 
@@ -43,7 +42,7 @@ impl Example {
 }
 
 pub static EXAMPLES: &[Example] = &[
-    Example::new("Show owners for every tracked file in the repository", "git ls-files | git codeowners"),
+    Example::new("Show owners for every tracked file", "git ls-files | git codeowners"),
     Example::new(
         "Show owners for files modified in last five commits",
         "git diff --name-only HEAD~5 HEAD | git codeowners"
@@ -70,7 +69,8 @@ ${examples
 
 fn main() {
     let args = Args::parse();
-    if args.help || args.paths.is_empty() {
+
+    if args.help || (!data_was_piped_in() && args.paths.is_empty()) {
         let mut printer = Printer::new(Args::command())
             .with("introduction", INTRO)
             .with("usage", USAGE)
@@ -101,8 +101,6 @@ fn main() {
 
         check_ownership_and_exit(&paths);
     } else {
-        let args = Args::parse();
-
         check_ownership_and_exit(&args.paths);
     }
 }

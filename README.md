@@ -37,7 +37,7 @@ LICENSE                                  (unowned)
 - via [pip](https://pypi.org/project/git-codeowners/): `pip install git-codeowners`
 - via [Cargo](https://crates.io/crates/git-owners): `cargo install git-owners`
 
-  *The Cargo crate installs an equivalent `git-owners` command in addition to `git-codeowners`, for backwards compatibility.*
+  Note: The Cargo crate installs an equivalent `git-owners` command in addition to `git-codeowners`, for backwards compatibility.
 
 
 ## Usage
@@ -45,13 +45,13 @@ LICENSE                                  (unowned)
 - Show owner of a file
 
   ```bash
-  git codeowners some/file
+  git codeowners some/path
   ```
 
 - Show owners for a list of files
 
   ```bash
-  git codeowners some/file some/other/file
+  git codeowners some/path some/other/path
   ```
 
 Each path should be relative to the git repository root. This makes it easy to combine with other git commands:
@@ -82,7 +82,7 @@ Each path should be relative to the git repository root. This makes it easy to c
 ## Features
 
 - Detects the right CODEOWNERS file of the current git repository (`CODEOWNERS`, `docs/CODEOWNERS`, or `.github/CODEOWNERS`)
-- Works well as a pre-commit hook; Returns a non-zero exit code if unowned files are found
+- Works well as a pre-commit hook. Returns a non-zero exit code if unowned files are found
 - Is composable & scripting friendly
 - Is fast & written in Rust
 
